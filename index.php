@@ -12,17 +12,52 @@
 </head>
 
 <body class="p-4">
+
+    <!-- header -->
+
     <header class="container text-center">
         <h1>PHP Iscrizione Newsletter</h1>
     </header>
 
-    <main>
+    <!-- /header -->
 
+    <!-- main -->
+
+    <main class="container">
+        <?php
+        if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["email"])) {
+            $email = $_GET["email"];
+            $isValid = filter_var($email, FILTER_VALIDATE_EMAIL);
+            $message = '';
+
+            if ($isValid) {
+                $message = 'Successo: la mail contiene un punto e una chiocciola';
+                $alertClass = 'alert-success';
+            } else {
+                $message = 'Errore: la mail NON contiene un punto e una chiocciola';
+                $alertClass = 'alert-danger';
+            }
+
+            echo '<div class="alert ' . $alertClass . '" role="alert">' . $message . '</div>';
+        }
+        ?>
+
+        <form method="get" action="index.php">
+            <div class="mb-3">
+                <label for="email" class="form-label">Inserisci Email</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </main>
 
-    <footer>
+    <!-- /main -->
 
+    <!-- /footer -->
+    <footer class="my-5 container">
+        <p class="text-primary">Controllo Email by Mirko Cherchi</p>
     </footer>
+    <!-- footer -->
 </body>
 
 </html>
